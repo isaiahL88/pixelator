@@ -1,2 +1,2 @@
 # pixelator
-Full stack web app to pixelized images.
+Full stack web app
