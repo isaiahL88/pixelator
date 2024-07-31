@@ -12,6 +12,7 @@ function App() {
     const formData = new FormData();
     formData.append("image", file);
     await axios.post("/api/posts", formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+    
   }
 
 

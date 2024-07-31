@@ -1,10 +1,16 @@
-import express from 'express'
+import express from 'express';
 import { PrismaClient } from '@prisma/client'
 import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import multer from 'multer'
 import crypto from 'crypto'
 
+import { spawn } from 'child_process'
+
+const childPython = spawn('python', ['--version']);
+childPython.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+})
 
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
@@ -21,7 +27,9 @@ const s3 = new S3Client({
     region: bucketRegion
 });
 
-const prisma = PrismaClient();
+const prisma = new PrismaClient();
+const app = express();
+
 
 //Create memory storage object
 const storage = multer.memoryStorage()
